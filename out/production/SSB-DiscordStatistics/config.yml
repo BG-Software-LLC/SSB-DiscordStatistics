@@ -1,0 +1,28 @@
+######################################################
+##                                                  ##
+##               SSB-DiscordStatistics              ##
+##                Developed by Ome_R                ##
+##                                                  ##
+######################################################
+
+# The token of the discord bot application.
+bot-token: ''
+
+# Your server's name
+server-name: 'SuperiorSkyblock'
+
+# Your server's icon
+server-icon: 'https://bg-software.com/imgs/superiorskyblock-icon.png'
+
+# Settings related to the top command.
+top-command:
+  # The command label
+  label: 'top'
+  # Amount of islands to show per page.
+  islands-per-page: 10
+  # Set the sorting type of the top command.
+  # You can use 'WORTH', 'LEVEL', 'RATING' and 'PLAYERS'
+  top-sorting: 'WORTH'
+
+# Settings related to the show command
+show-command: 'show'

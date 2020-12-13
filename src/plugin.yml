@@ -1,0 +1,10 @@
+name: SSB-DiscordStatistics
+version: 1.0.0
+author: Ome_R
+description: Discord statistics integration to your SuperiorSkyblock!
+main: com.bgsoftware.ssbdiscordstatistics.SSBDiscordStatisticsPlugin
+website: https://bg-software.com/
+
+depend:
+  - SuperiorSkyblock2
+  - DiscordSRV
