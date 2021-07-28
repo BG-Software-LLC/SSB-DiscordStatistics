@@ -14,8 +14,8 @@ You can download it by opening the releases tab, at the right of the window. The
 - Restart your server after configuring both DiscordSRV and this addon.
 
 ## Commands
-!top - Displays the top islands.
-!show <player-name / island-name> - Displays information on that specific island.
+- !top - Displays the top islands.
+- !show <player-name / island-name> - Displays information on that specific island.
 
 ## Credits
 
