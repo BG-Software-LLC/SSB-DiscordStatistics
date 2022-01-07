@@ -5,7 +5,9 @@ This addon will also host a discord bot for you with some basic commands to show
 
 ## Installation
 
-You can download it by opening the releases tab, at the right of the window. Then, drop the jar into the plugins folder, and start your server.
+1. Download the addon on our [Jenkins page](https://hub.bg-software.com/job/SuperiorSkyblock%20Addons/job/DiscordStatistics/)!
+2. Drag the jar to the modules folder of SuperiorSkyblock.
+3. Start the server.
 
 **Please note**: Make sure you also have DiscordSRV installed on your server as well.
 
