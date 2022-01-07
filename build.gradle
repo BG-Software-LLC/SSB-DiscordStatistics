@@ -1,23 +1,24 @@
 plugins {
     id 'java'
-    id 'maven'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'maven-publish'
 }
 
 group 'SSB-DiscordStatistics'
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     maven { url 'https://repo.bg-software.com/repository/nms/' }
     maven { url 'https://repo.bg-software.com/repository/api/' }
+    maven { url 'https://repo.bg-software.com/repository/common/' }
     maven { url 'https://repo.bg-software.com/repository/public-libs/' }
 }
 
 dependencies {
     compileOnly "org.spigotmc:v1_8_R3-Taco:latest"
     compileOnly "github.scarsz:DiscordSRV:latest"
-    compileOnly "com.bgsoftware:SuperiorSkyblockAPI:latest"
+    compileOnly "com.bgsoftware:SuperiorSkyblockAPI:1.8.3"
+    implementation 'com.bgsoftware.common.config:CommentedConfiguration:latest'
 }
 
 processResources {

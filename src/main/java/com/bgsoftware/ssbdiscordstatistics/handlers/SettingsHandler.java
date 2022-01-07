@@ -1,10 +1,11 @@
 package com.bgsoftware.ssbdiscordstatistics.handlers;
 
+import com.bgsoftware.common.config.CommentedConfiguration;
 import com.bgsoftware.ssbdiscordstatistics.SSBDiscordStatisticsPlugin;
-import com.bgsoftware.ssbdiscordstatistics.config.CommentedConfiguration;
 import com.bgsoftware.superiorskyblock.api.island.SortingType;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class SettingsHandler {
 
@@ -16,14 +17,19 @@ public final class SettingsHandler {
     public final SortingType topSorting;
     public final String showCommand;
 
-    public SettingsHandler(SSBDiscordStatisticsPlugin plugin){
+    public SettingsHandler(SSBDiscordStatisticsPlugin plugin) {
         File file = new File(plugin.getDataFolder(), "config.yml");
 
-        if(!file.exists())
-            plugin.saveResource("config.yml", false);
+        if (!file.exists())
+            plugin.saveResource("config.yml");
 
         CommentedConfiguration cfg = CommentedConfiguration.loadConfiguration(file);
-        cfg.syncWithConfig(file, plugin.getResource("config.yml"));
+
+        try {
+            cfg.syncWithConfig(file, plugin.getResource("config.yml"));
+        } catch (IOException error) {
+            throw new RuntimeException(error);
+        }
 
         botToken = cfg.getString("bot-token");
         serverName = cfg.getString("server-name");

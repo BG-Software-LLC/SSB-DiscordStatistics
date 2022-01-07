@@ -3,59 +3,76 @@ package com.bgsoftware.ssbdiscordstatistics;
 import com.bgsoftware.ssbdiscordstatistics.handlers.CommandsHandler;
 import com.bgsoftware.ssbdiscordstatistics.handlers.SettingsHandler;
 import com.bgsoftware.ssbdiscordstatistics.listeners.CommandsListener;
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
+import com.bgsoftware.superiorskyblock.api.commands.SuperiorCommand;
+import com.bgsoftware.superiorskyblock.api.modules.PluginModule;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
 import github.scarsz.discordsrv.dependencies.jda.api.JDABuilder;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Activity;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Icon;
 import github.scarsz.discordsrv.dependencies.jda.api.requests.GatewayIntent;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.Listener;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public final class SSBDiscordStatisticsPlugin extends JavaPlugin {
+public final class SSBDiscordStatisticsPlugin extends PluginModule {
 
-    private static SSBDiscordStatisticsPlugin plugin;
+    private static SSBDiscordStatisticsPlugin instance;
 
     private SettingsHandler settingsHandler;
     private CommandsHandler commandsHandler;
     private JDA bot;
 
-    @Override
-    public void onLoad() {
-        plugin = this;
+    public SSBDiscordStatisticsPlugin() {
+        super("DiscordStatistics", "Ome_R");
+        instance = this;
     }
 
     @Override
-    public void onEnable() {
-        reloadPlugin();
+    public void onEnable(SuperiorSkyblock plugin) {
+        onReload(plugin);
 
         try {
             loadBot();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log("############################################");
             log("##                                        ##");
             log("##  Error while enabling the discord bot! ##");
             log("##                                        ##");
             log("############################################");
-            Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(this));
-            return;
+            throw new RuntimeException(ex);
         }
 
         log("Successfully enabled the discord bot!");
     }
 
     @Override
-    public void onDisable() {
+    public void onReload(SuperiorSkyblock plugin) {
+        this.settingsHandler = new SettingsHandler(this);
+        this.commandsHandler = new CommandsHandler(this);
+    }
+
+    @Override
+    public void onDisable(SuperiorSkyblock plugin) {
         bot.shutdown();
     }
 
-    public void reloadPlugin(){
-        this.settingsHandler = new SettingsHandler(this);
-        this.commandsHandler = new CommandsHandler(this);
+    @Override
+    public Listener[] getModuleListeners(SuperiorSkyblock superiorSkyblock) {
+        return null;
+    }
+
+    @Override
+    public SuperiorCommand[] getSuperiorCommands(SuperiorSkyblock superiorSkyblock) {
+        return null;
+    }
+
+    @Override
+    public SuperiorCommand[] getSuperiorAdminCommands(SuperiorSkyblock superiorSkyblock) {
+        return null;
     }
 
     public SettingsHandler getSettings() {
@@ -73,12 +90,12 @@ public final class SSBDiscordStatisticsPlugin extends JavaPlugin {
     private void loadBot() throws LoginException {
         this.bot = JDABuilder.create(GatewayIntent.GUILD_MESSAGES).setToken(settingsHandler.botToken)
                 .addEventListeners(new CommandsListener(this))
-                .setActivity(Activity.playing(plugin.getSettings().serverName))
+                .setActivity(Activity.playing(instance.getSettings().serverName))
                 .build();
 
-        if(!plugin.getSettings().serverIcon.isEmpty()) {
+        if (!instance.getSettings().serverIcon.isEmpty()) {
             try {
-                URLConnection conn = new URL(plugin.getSettings().serverIcon).openConnection();
+                URLConnection conn = new URL(instance.getSettings().serverIcon).openConnection();
                 conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
                 this.bot.getSelfUser().getManager().setAvatar(Icon.from(conn.getInputStream())).queue();
             } catch (IOException ex) {
@@ -87,12 +104,12 @@ public final class SSBDiscordStatisticsPlugin extends JavaPlugin {
         }
     }
 
-    public static void log(String message){
-        plugin.getLogger().info(message);
+    public static void log(String message) {
+        instance.getLogger().info(message);
     }
 
     public static SSBDiscordStatisticsPlugin getPlugin() {
-        return plugin;
+        return instance;
     }
 
 }
