@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="SSB-DiscordStatistics">
-    <output-path>$PROJECT_DIR$/../../My Servers/Testing 1.16/plugins</output-path>
-    <root id="archive" name="SSB-DiscordStatistics.jar">
-      <element id="module-output" name="SSB-DiscordStatistics" />
-    </root>
-  </artifact>
-</component>
