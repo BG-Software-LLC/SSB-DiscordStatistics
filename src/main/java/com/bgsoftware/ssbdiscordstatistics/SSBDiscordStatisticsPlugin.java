@@ -5,6 +5,7 @@ import com.bgsoftware.ssbdiscordstatistics.handlers.SettingsHandler;
 import com.bgsoftware.ssbdiscordstatistics.listeners.CommandsListener;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
 import com.bgsoftware.superiorskyblock.api.commands.SuperiorCommand;
+import com.bgsoftware.superiorskyblock.api.modules.ModuleLoadTime;
 import com.bgsoftware.superiorskyblock.api.modules.PluginModule;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
 import github.scarsz.discordsrv.dependencies.jda.api.JDABuilder;
@@ -73,6 +74,11 @@ public final class SSBDiscordStatisticsPlugin extends PluginModule {
     @Override
     public SuperiorCommand[] getSuperiorAdminCommands(SuperiorSkyblock superiorSkyblock) {
         return null;
+    }
+
+    @Override
+    public ModuleLoadTime getLoadTime() {
+        return ModuleLoadTime.AFTER_HANDLERS_LOADING;
     }
 
     public SettingsHandler getSettings() {
